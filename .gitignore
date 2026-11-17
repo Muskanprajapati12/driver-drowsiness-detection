@@ -1,0 +1,16 @@
+# Virtual environment (big, anyone can recreate it with requirements.txt)
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor settings
+.vscode/
+
+# The model file is downloaded with download_model.py, so it is not uploaded
+assets/face_landmarker.task
+
+# Windows
+Thumbs.db
+desktop.ini
