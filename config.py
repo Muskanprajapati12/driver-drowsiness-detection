@@ -28,7 +28,7 @@ LEFT_EYE_INDICES = [362, 385, 387, 263, 373, 380]
 
 # ---- Drowsiness detection settings (change these for your own eyes) ----
 EAR_THRESHOLD = 0.20        # EAR below this = eye closed (open eye ~0.30 for the developer)
-CLOSED_FRAMES_LIMIT = 20    # consecutive closed frames before DROWSY (~0.7 s at 30 FPS)
+CLOSED_SECONDS_LIMIT = 0.7  # eyes must stay closed this many seconds before DROWSY
 RECOVERY_FRAMES = 3         # open frames needed to go back to ALERT
 THRESHOLD_STEP = 0.01       # how much the = and - keys change the threshold
 NO_FACE_WARNING_FRAMES = 60 # show a warning after this many frames without a face (~2 s)

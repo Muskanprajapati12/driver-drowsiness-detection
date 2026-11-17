@@ -11,7 +11,7 @@ A real-time driver drowsiness detection system written **only in Python**. It us
 - Eye detection from landmarks (6 points per eye)
 - Eye Aspect Ratio (EAR) calculation, averaged over both eyes
 - Prolonged eye closure detection over consecutive frames (a normal blink does not trigger the alarm)
-- Configurable EAR threshold and closed-frame limit in `config.py`
+- Configurable EAR threshold and closed-time limit (in seconds) in `config.py`
 - Live on-screen EAR value and status: `ALERT`, `DROWSY` or `NO FACE`
 - Audio alarm using pygame while the driver is `DROWSY`
 - Start / stop monitoring from the keyboard
@@ -110,7 +110,7 @@ Press `SPACE`, keep your eyes **open** for about 7 seconds, then **close** them 
 | `FRAME_WIDTH` / `FRAME_HEIGHT` | 640 / 480 | Requested frame size |
 | `CAMERA_RETRY_ATTEMPTS` | 3 | Reconnect attempts if the camera fails |
 | `EAR_THRESHOLD` | 0.20 | EAR below this value means the eye is closed |
-| `CLOSED_FRAMES_LIMIT` | 20 | Consecutive closed frames before `DROWSY` (about 0.7 s at 30 FPS) |
+|`CLOSED_SECONDS_LIMIT` | 0.7 | Seconds the eyes must stay closed before `DROWSY` (does not depend on FPS) |
 | `RECOVERY_FRAMES` | 3 | Open frames in a row needed to return to `ALERT` |
 | `NO_FACE_WARNING_FRAMES` | 60 | Frames without a face before a warning is shown |
 | `MIN_FACE_DETECTION_CONFIDENCE`, `MIN_FACE_PRESENCE_CONFIDENCE`, `MIN_TRACKING_CONFIDENCE` | 0.5 | MediaPipe confidence limits (lowering them can help in dim light) |
@@ -154,7 +154,7 @@ Illustrative example: if both vertical distances are 8 px and the eye width is 3
 A blink lasts only a few frames, but drowsiness means the eyes stay closed longer. `src/drowsiness.py` therefore:
 
 1. Counts consecutive frames where `EAR < EAR_THRESHOLD`.
-2. Switches to `DROWSY` only after `CLOSED_FRAMES_LIMIT` such frames in a row.
+2. Switches to `DROWSY` only when the eyes have stayed closed for `CLOSED_SECONDS_LIMIT` seconds.
 3. Returns to `ALERT` only after `RECOVERY_FRAMES` open frames in a row, so one noisy frame does not break the count.
 4. If no face is found, the counters are reset and the status is `NO FACE`. If the driver was already `DROWSY`, that state is kept on purpose.
 

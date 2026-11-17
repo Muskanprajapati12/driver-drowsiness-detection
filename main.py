@@ -41,7 +41,7 @@ def draw_eye_points(frame, points, indices, show_labels):
 
 def make_drowsiness_detector(threshold):
     """Creates a fresh drowsiness detector (all counters at zero)."""
-    return DrowsinessDetector(threshold, config.CLOSED_FRAMES_LIMIT, config.RECOVERY_FRAMES)
+    return DrowsinessDetector(threshold, config.CLOSED_SECONDS_LIMIT, config.RECOVERY_FRAMES)
 
 
 def reconnect_camera(camera, attempts, delay_seconds):
@@ -177,7 +177,7 @@ def main():
             cv2.putText(frame, f"Threshold: {drowsiness.ear_threshold:.2f}", (10, 108),
                         FONT, 0.6, WHITE, 1)
             cv2.putText(frame,
-                        f"Closed frames: {drowsiness.closed_frames}/{drowsiness.closed_frames_limit}",
+                        f"Closed: {drowsiness.closed_seconds:.2f}/{drowsiness.closed_seconds_limit:.2f} s",
                         (10, 134), FONT, 0.6, WHITE, 1)
             cv2.putText(frame, alarm_text, (10, 160), FONT, 0.6, WHITE, 1)
             cv2.putText(frame, status, (10, 205), FONT, 1.4, STATUS_COLORS[status], 3)
